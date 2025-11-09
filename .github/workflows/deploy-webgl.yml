@@ -1,0 +1,33 @@
+# nombre workflow
+name: Deploy Unity WebGL to Pages
+
+# cuándo debe ejecutarse
+on:
+  push:
+    branches: [ "main" ]
+
+# permisos que necesita el 'Action' para escribir en gh pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# tareas a ejecutar
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
